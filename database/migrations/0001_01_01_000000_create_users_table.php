@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->bigInteger('pseudo');
-            $table->bigInteger('role');
+            $table->string('pseudo')->unique();
+            $table->integer('role')->default(2); // 2 = user par défaut
             $table->rememberToken();
             $table->timestamps();
             // $table->foreign('teams_id')->references('id')->on('team');

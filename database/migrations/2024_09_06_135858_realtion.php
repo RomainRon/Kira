@@ -9,7 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('team_id')->references('id')->on('teams')->constrained('users')->onDelete('cascade');
+            $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('cascade');
+
         });
         Schema::table('forums', function (Blueprint $table) {
              $table->foreignId('subject_id')->constrained('forum_subjects')->onDelete('cascade');
@@ -56,31 +57,30 @@ return new class extends Migration
         Schema::table('forums', function (Blueprint $table) {
             $table->dropForeign(['subject_id']);
         });
-        Schema::table('forums', function (Blueprint $table) {
+        Schema::table('forum_subjects', function (Blueprint $table) {
             $table->dropForeign(['forum_id']);
             $table->dropForeign(['user_id']);
         });
-        Schema::table('forums', function (Blueprint $table) {
+        Schema::table('subject_answers', function (Blueprint $table) {
             $table->dropForeign(['subject_id']);
             $table->dropForeign(['user_id']);
         });
-        Schema::table('forums', function (Blueprint $table) {
+        Schema::table('direct_chat', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
             $table->dropForeign(['tournament_id']);
+        });
+        Schema::table('register_tournament', function (Blueprint $table) {
+            $table->dropForeign(['tournament_id']);
+            $table->dropForeign(['team_id']);
             $table->dropForeign(['user_id']);
         });
-        Schema::table('forums', function (Blueprint $table) {
-            $table->dropForeign(['tournament_id']);
+        Schema::table('users_teams', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropForeign(['team_id']);
-
         });
-        Schema::table('forums', function (Blueprint $table) {
-            $table->dropForeign(['forum_id']);
-            $table->dropForeign(['user_id']);
-        });
-        Schema::table('forums', function (Blueprint $table) {
+        Schema::table('chat_tournament', function (Blueprint $table) {
             $table->dropForeign(['direct_chat_id']);
             $table->dropForeign(['tournament_id']);
         });
-    }
+    }    
 };
